@@ -22,8 +22,10 @@ p {
   --text-color-2: #BF9766;
   --text-color-3: #BDBDBD;
   --background-banner: linear-gradient(180deg, #222121 0%, rgba(34, 33, 33, 0.24) 54.21%, #222121 100%);
-
-
+  --background-1: #2D2C2C;
+  --background-2: #D9D9D9;
+  --letter-spacing-text: 4px;
+  --font-size-h1: 4rem;
 }
 
 /* Navbar */
@@ -70,3 +72,253 @@ p {
   color: var(--text-color-2);
 }
 
+/* Home */
+
+.Home .Banner {
+  background: var(--background-banner);
+  height: 100vh;
+}
+
+.Home .Banner p {
+  text-transform: uppercase;
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  font-size: 1.5rem;
+}
+
+.Home .Banner h1 {
+  color: var(--text-color-1);
+  font-size: var(--font-size-h1);
+  font-weight: normal;
+}
+
+.Home .Banner .DiscoverButton,
+.Home .Services .DiscoverButton {
+  border: none;
+  border-top: 1px solid var(--text-color-1);
+  border-bottom: 1px solid var(--text-color-1);
+  background: none;
+  font-style: italic;
+  color: var(--text-color-1);
+}
+
+.Home .Banner .AddButton {
+  border: 1px dashed var(--text-color-3);
+  background: none;
+  border-radius: 5px;
+  color: var(--text-color-3);
+}
+
+.Home .Availability .Box {
+  width: 80%;
+  background: var(--background-1);
+}
+
+.Home .RoomChoices .RoomTitle {
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  text-transform: uppercase;
+}
+
+.Home .RoomChoices .RoomHeading h1 {
+  font-weight: normal;
+  font-size: var(--font-size-h1);
+}
+
+.Home .RoomChoices .RoomCardContainer {
+  height: 300px;
+  background: var(--background-banner);
+  overflow: hidden;
+}
+
+.Home .RoomChoices .RoomCardContainer .RoomCard {
+  transform: translateY(85%);
+  transition: 0.5s all linear;
+  cursor: pointer;
+}
+
+.Home .RoomChoices .RoomCardContainer .RoomCard:hover {
+  transform: translateY(60%);
+}
+
+.Home .RoomChoices .RoomCardContainer .RoomCard p,
+.Home .RoomChoices .RoomCardContainer .RoomCard h1 {
+  color: var(--text-color-1);
+}
+
+.Home .RoomChoices .RoomCardContainer .RoomCard:hover .StraightLine {
+  width: 100%;
+}
+
+.Home .RoomChoices .RoomCardContainer .RoomCard .StraightLine {
+  width: 10%;
+  height: 1px;
+  background-color: var(--text-color-1);
+  transition: 0.5s all linear;
+}
+
+.Home .RoomChoices .RoomCardContainer .RoomCard .BookNow {
+  background: none;
+  border: none;
+  color: var(--text-color-2);
+}
+
+.Home .Services .ServiceTextContainer .ServiceTitle {
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  text-transform: uppercase;
+}
+
+.Home .Services .ServiceTextContainer .ServiceHeading h1 {
+  font-weight: normal;
+  font-size: var(--font-size-h1);
+}
+
+.Home .Services .ServiceCardContainer {
+  background-color: var(--background-1);
+}
+
+.Home .Services .ServiceCardContainer.NoService {
+  background-color: var(--background-2);
+}
+
+.Home .Services .ServiceCardContainer h5,
+.Home .Services .ServiceCardContainer p {
+  color: var(--text-color-1);
+}
+
+.Home .Services .ServiceCardContainer .DiscoverButton:hover {
+  border-top: 1px solid var(--text-color-2);
+  border-bottom: 1px solid var(--text-color-2);
+  color: var(--text-color-2);
+}
+
+.Home .CustomerReview {
+  background: var(--background-banner);
+  height: 100vh;
+}
+
+.Home .CustomerReview .ReviewTitle {
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  text-transform: uppercase;
+}
+
+.Home .CustomerReview .ReviewHeading h1 {
+  font-weight: normal;
+  color: var(--text-color-1);
+  font-size: var(--font-size-h1);
+}
+
+.Home .Review {
+  position: relative;
+  top: -150px;
+}
+
+.Home .Review .NoSection {
+  background: var(--background-2);
+}
+
+.Home .Review .Section {
+  background: var(--background-1);
+}
+
+.Home .Review .Section .Text {
+  color: var(--text-color-1);
+}
+
+.Home .Review .Section .Author {
+  color: var(--text-color-2);
+}
+
+.Home .Review .Section .Type {
+  color: var(--text-color-1);
+}
+
+.Home .ExpertTeam .TeamTitle {
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  text-transform: uppercase;
+}
+
+.Home .ExpertTeam .TeamHeading h1 {
+  font-weight: normal;
+  font-size: var(--font-size-h1);
+}
+
+.Home .ExpertTeam .TeamCard {
+  width: 250px;
+  overflow: hidden;
+}
+
+.Home .ExpertTeam .TeamCard .Cover {
+  height: 300px;
+  background: var(--background-banner);
+}
+
+.Home .ExpertTeam .TeamCard .Cover .SocialMedia {
+  transform: translateX(160%);
+  transition: 0.1s linear all;
+}
+
+.Home .ExpertTeam .TeamCard:hover .Cover .SocialMedia {
+  transform: translateX(0%);
+}
+
+.Home .ExpertTeam .TeamCard .Cover .SocialMedia img {
+  cursor: pointer;
+}
+
+.Home .ExpertTeam .TeamCard .Text {
+  border-left: 1px solid var(--text-color-2);
+}
+
+.Home .ExpertTeam .TeamCard .Text .Name h4 {
+  font-size: normal;
+}
+
+.Home .ExpertTeam .TeamCard .Text .Profession {
+  color: var(--text-color-2);
+}
+
+
+/* DateInput */
+
+.DateInputContainer {
+  position: relative;
+  float: left;
+}
+
+.DateInputContainer .DateInput {
+  padding: 5px 10px;
+  height: 30px;
+  width: 150px;
+}
+
+.DateInputContainer .CalendarButton {
+  position: absolute;
+  top: 2px;
+  right: 11px;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  pointer-events: none;
+}
+
+.DateInputContainer .CalendarButton button {
+  border: none;
+  background: transparent;
+}
+
+
+/* Vertical Line */
+
+.VerticalLine {
+  width: 1px;
+  height: 100px;
+  background-color: var(--text-color-2);
+}
+
+.VerticalLine.White {
+  background-color: var(--text-color-1);
+}
