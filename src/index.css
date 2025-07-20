@@ -11,3 +11,62 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+p {
+  margin: 0;
+}
+
+
+:root {
+  --text-color-1: #FFFFFF;
+  --text-color-2: #BF9766;
+  --text-color-3: #BDBDBD;
+  --background-banner: linear-gradient(180deg, #222121 0%, rgba(34, 33, 33, 0.24) 54.21%, #222121 100%);
+
+
+}
+
+/* Navbar */
+
+.NavBar .NavMenu{
+  position: relative;
+}
+
+.NavBar .NavMenu:hover{
+  cursor: pointer;
+}
+
+.NavBar .NavMenu p{
+  color: var(--text-color-1);
+}
+
+
+.NavBar .NavMenu p.Active{
+  color: var(--text-color-2);
+}
+
+
+.NavBar .NavMenu .ActiveCircle {
+  width: 5px;
+  height: 5px;
+  background-color: var(--text-color-2);
+  border-radius: 50%;
+}
+
+.NavBar .NavMenu .SubMenuContainer {
+  background-color: var(--text-color-1);
+  width: 200px;
+  position: absolute;
+  left: -55px;
+  top: 45px;
+  transition: 1s linear all;
+}
+
+.NavBar .NavMenu .SubMenuContainer p {
+  color: var(--text-color-3);
+}
+
+.NavBar .NavMenu .SubMenuContainer p.Active {
+  color: var(--text-color-2);
+}
+
