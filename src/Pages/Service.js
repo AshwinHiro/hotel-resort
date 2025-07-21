@@ -1,6 +1,139 @@
-import React from "react";
+import React, { useState } from "react";
+import Popup from "../Components/Popup/Popup";
 
 const Service = () => {
+
+      const InitialServiceConfig = {
+        ServiceName: "",
+        ServiceDesc: "",
+        ImageSrc: "",
+    };
+
+      const [_hoverServiceCard, setHoverServiceCard] = useState("");
+    
+  const ServicesData = [
+    [
+      {
+        ServiceName: "",
+        ServiceDesc: "",
+        ImageSrc: "",
+      },
+      {
+        ServiceName: "Workout & Yoga Rooms",
+        ServiceDesc:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        ImageSrc: "images/Gym.png",
+      },
+    ],
+    [
+      {
+        ServiceName: "Spa, Massage & Sauna",
+        ServiceDesc:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        ImageSrc: "images/Spa.png",
+      },
+      {
+        ServiceName: "",
+        ServiceDesc: "",
+        ImageSrc: "",
+      },
+    ],
+    [
+      {
+        ServiceName: "",
+        ServiceDesc: "",
+        ImageSrc: "",
+      },
+      {
+        ServiceName: "Multiple Cuisines & Beverages",
+        ServiceDesc:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        ImageSrc: "images/Breakfast.png",
+      },
+    ],
+  ];
+
+  
+  const [_openServiceModal, setOpenServiceModal] = useState(false);
+  const [_StoreServiceConfig, setStoreServiceConfig] = useState(InitialServiceConfig);
+  const [_ServiceConfig, setServiceConfig] = useState(ServicesData);
+  const [_ServiceIndex, setServiceIndex] = useState([]);
+
+    
+  const handleServiceModal = (toggle, Indexes) => {
+    if (toggle === "open") {
+      const ServiceData = Object.assign({}, _ServiceConfig[Indexes[0]][Indexes[1]]);
+      setServiceIndex(Indexes);
+      setStoreServiceConfig(ServiceData);
+      setOpenServiceModal(true);
+    } else {
+      setServiceIndex([]);
+      setStoreServiceConfig(InitialServiceConfig);
+      setOpenServiceModal(false);
+    }
+  };
+
+  const handleServiceSave = () => {
+    const UpdateServiceData = Object.assign([], _ServiceConfig);
+    UpdateServiceData[_ServiceIndex[0]][_ServiceIndex[1]] = _StoreServiceConfig;
+    setServiceConfig(UpdateServiceData);
+    setStoreServiceConfig(InitialServiceConfig);
+    setOpenServiceModal(false);
+  };
+
+  const ServiceCard = ({ ServiceName, ServiceDesc, ImageSrc, ServicesIndex, ServiceIndex}) => {
+    return (
+      <div
+        className={`ServiceCardContainer ${
+          ServiceName === "" ? "NoService" : ""
+        } col p-3`}
+      >
+        {ServiceName !== "" ? (
+          <>
+            <div className="p-4">
+              <div className="my-3">
+                <img width={40} src={ImageSrc} />
+              </div>
+
+              <div className="my-3">
+                <h5>{ServiceName}</h5>
+              </div>
+
+              <div className="my-3">
+                <p>{ServiceDesc}</p>
+              </div>
+
+              <div className="my-5 d-flex justify-content-end">
+                <button
+                  onMouseOver={() => setHoverServiceCard(ServiceName)}
+                  onMouseLeave={() => setHoverServiceCard("")}
+                  className="DiscoverButton px-4 py-2"
+                >
+                  Discover Rooms{" "}
+                  <img
+                    className="mx-2"
+                    width={5}
+                    src={
+                      _hoverServiceCard === ServiceName
+                        ? "images/Right_Arrow.png"
+                        : "images/Right_Arrow_White.png"
+                    }
+                    alt="Right Arrow"
+                  />
+                </button>
+              </div>
+            </div>
+            <div className="EditContainer px-2 py-2">
+              <img width={25} src="images/EditColor.png" alt="Edit" onClick={() => handleServiceModal("open", [ServicesIndex,ServiceIndex])} />
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  };
+
   const DateInput = () => {
     return (
       <div className="DateInputContainer">
@@ -56,15 +189,15 @@ const Service = () => {
           </div>
         </div>
 
-        {/* <div className="mt-5">
-          {ServicesData.map((Services) => (
-            <div className="row">
+        <div className="mt-5">
+          {_ServiceConfig.map((Services, ServicesIndex) => (
+            <div key={ServicesIndex} className="row">
               {Services.map((Service, ServiceIndex) => (
-                <ServiceCard key={ServiceIndex} {...Service} />
+                <ServiceCard key={ServiceIndex} ServicesIndex={ServicesIndex} ServiceIndex={ServiceIndex} {...Service} />
               ))}
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
 
       <br />
@@ -144,8 +277,80 @@ const Service = () => {
 
       <br />
       <br />
+
+
+      {/* Service Popup */}
+
+      {_openServiceModal && (
+        <Popup>
+          <div className="AddButton">
+            <div className="text-end my-3 Close">
+              <img
+                width={25}
+                src="images/Cross.png"
+                alt="Close"
+                onClick={() => setOpenServiceModal(false)}
+              />
+            </div>
+
+            <div className="d-flex align-items-center justify-content-between my-3">
+              <div>
+                <div>
+                  <h5>Service Name</h5>
+                </div>
+              </div>
+
+              <div>
+                <input
+                  className="px-3 py-1"
+                  type="text"
+                  value={_StoreServiceConfig.ServiceName}
+                  onChange={(e) =>
+                    setStoreServiceConfig((prevdata) => ({
+                      ...prevdata,
+                      ServiceName: e.target.value,
+                    }))
+                  }
+                  placeholder="Suite"
+                />
+              </div>
+            </div>
+
+            <div className="my-3">
+              <div>
+                <div>
+                  <h5>Service Description</h5>
+                </div>
+              </div>
+
+              <div>
+                <textarea
+                  className="px-3 py-1"
+                  cols={5}
+                  value={_StoreServiceConfig.ServiceDesc}
+                  onChange={(e) =>
+                    setStoreServiceConfig((prevdata) => ({
+                      ...prevdata,
+                      ServiceDesc: e.target.value,
+                    }))
+                  }
+                  placeholder="Suite"
+                />
+              </div>
+            </div>
+
+            <div className="Buttons">
+              <div className="Save my-2">
+                <button className="w-100 py-2" onClick={() => handleServiceSave()}>
+                  Save Button
+                </button>
+              </div>
+            </div>
+          </div>
+        </Popup>
+      )}
       
-      
+
     </div>
   );
 };

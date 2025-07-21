@@ -32,6 +32,11 @@ p {
 
 /* Navbar */
 
+.NavBg {
+  background: var(--background-1);
+  z-index: 9999;
+}
+
 .NavBar .NavMenu{
   position: relative;
 }
@@ -40,15 +45,18 @@ p {
   cursor: pointer;
 }
 
-.NavBar .NavMenu p{
+.NavBar .NavMenu p,
+.NavBar .NavMenu a{
   color: var(--text-color-1);
 }
 
+.NavBar .NavMenu a {
+  text-decoration: none;
+}
 
 .NavBar .NavMenu p.Active{
   color: var(--text-color-2);
 }
-
 
 .NavBar .NavMenu .ActiveCircle {
   width: 5px;
@@ -68,6 +76,11 @@ p {
 
 .NavBar .NavMenu .SubMenuContainer p {
   color: var(--text-color-3);
+}
+
+.NavBar .NavMenu .SubMenuContainer a {
+  color: var(--text-color-3);
+  text-decoration: none;
 }
 
 .NavBar .NavMenu .SubMenuContainer p.Active {
@@ -388,6 +401,14 @@ p {
   font-weight: normal;
 }
 
+.ServicePage .Services .DiscoverButton {
+  border: none;
+  border-top: 1px solid var(--text-color-1);
+  border-bottom: 1px solid var(--text-color-1);
+  background: none;
+  font-style: italic;
+  color: var(--text-color-1);
+}
 
 .ServicePage .Services .ServiceTextContainer .ServiceTitle {
   color: var(--text-color-2);
@@ -402,6 +423,7 @@ p {
 
 .ServicePage .Services .ServiceCardContainer {
   background-color: var(--background-1);
+  position: relative;
 }
 
 .ServicePage .Services .ServiceCardContainer.NoService {
@@ -417,6 +439,21 @@ p {
   border-top: 1px solid var(--text-color-2);
   border-bottom: 1px solid var(--text-color-2);
   color: var(--text-color-2);
+}
+
+.ServicePage .Services .ServiceCardContainer .EditContainer {
+  background: var(--text-color-1);
+  width: fit-content;
+  position: absolute;
+  border-radius: 10px;
+  top: 40%;
+  left: 50%;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.ServicePage .Services .ServiceCardContainer:hover .EditContainer {
+  visibility: visible;
 }
 
 .ServicePage .Experience {
