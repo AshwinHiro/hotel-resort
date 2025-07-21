@@ -24,6 +24,7 @@ p {
   --background-banner: linear-gradient(180deg, #222121 0%, rgba(34, 33, 33, 0.24) 54.21%, #222121 100%);
   --background-1: #2D2C2C;
   --background-2: #D9D9D9;
+  --background-3: #575656;
   --letter-spacing-text: 4px;
   --font-size-h1: 4rem;
 }
@@ -92,6 +93,10 @@ p {
   font-weight: normal;
 }
 
+.Home .Banner .DiscoverButton {
+  position: relative;
+}
+
 .Home .Banner .DiscoverButton,
 .Home .Services .DiscoverButton {
   border: none;
@@ -100,6 +105,31 @@ p {
   background: none;
   font-style: italic;
   color: var(--text-color-1);
+}
+
+.Home .Banner .DiscoverButton.Medium {
+  width: 150px;
+}
+
+.Home .Banner .DiscoverButton.Large {
+  width: 200px;
+}
+
+.Home .Banner .DiscoverButton.Fill {
+  border: 1px solid var(--text-color-3);
+  border-radius: 10px;
+}
+
+.Home .Banner .DiscoverButton .Edit {
+  visibility: hidden;
+  position: absolute;
+  right: 3px;
+}
+
+.Home .Banner .DiscoverButton:hover .Edit {
+  visibility: visible;
+  position: absolute;
+  right: 3px;
 }
 
 .Home .Banner .AddButton {
@@ -126,9 +156,25 @@ p {
 }
 
 .Home .RoomChoices .RoomCardContainer {
+  position: relative;
   height: 300px;
   background: var(--background-banner);
   overflow: hidden;
+}
+
+.Home .RoomChoices .RoomCardContainer .EditContainer {
+  background: var(--text-color-1);
+  width: fit-content;
+  position: absolute;
+  border-radius: 10px;
+  top: 40%;
+  left: 50%;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.Home .RoomChoices .RoomCardContainer:hover .EditContainer {
+  visibility: visible;
 }
 
 .Home .RoomChoices .RoomCardContainer .RoomCard {
@@ -321,4 +367,138 @@ p {
 
 .VerticalLine.White {
   background-color: var(--text-color-1);
+}
+
+/* Horizontal Line */
+
+.HorizontalLine {
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-color-1);
+  transition: 0.5s all linear;
+}
+
+/* Popup */
+
+.PopupContainer {
+  position: fixed;
+  background-color: #00000055;
+  /* width: 100%;
+  height: 100%; */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.PopupContainer .Box {
+  min-width: 500px;
+  background-color: var(--text-color-1);
+  border-radius: 10px;
+}
+
+.PopupContainer .Box .Close img {
+  cursor: pointer;
+}
+
+.PopupContainer .Box .AddButton select,
+.PopupContainer .Box .AddButton input {
+  width: 150px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.PopupContainer .Box .AddButton select:focus,
+.PopupContainer .Box .AddButton select:active,
+.PopupContainer .Box .AddButton select:focus-within {
+  outline: none;
+}
+
+.PopupContainer .Box .AddButton .ColorPicker {
+  border: 1px solid black;
+  width: 150px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.PopupContainer .Box .AddButton .ColorPicker input[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.PopupContainer .Box .AddButton .ColorPicker input[type="color"]::-webkit-color-swatch {
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.PopupContainer .Box .AddButton .Buttons .Save button {
+  background-color: var(--text-color-2);
+  color: var(--text-color-1);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.3rem;
+}
+
+.PopupContainer .Box .AddButton .Buttons .Delete button {
+  background-color: transparent;
+  color: red;
+  border: none;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* Footer */
+
+.Footer {
+  background: var(--background-1);
+}
+
+.Footer .Logo p {
+  color: var(--text-color-1);
+}
+
+.Footer .Links p,
+.Footer .Subscribe p {
+  color: var(--text-color-1);
+  text-transform: uppercase;
+}
+
+.Footer .Subscribe p {
+  text-transform: none;
+}
+
+.Footer .Links p.Title,
+.Footer .Subscribe p.Title {
+  text-transform: uppercase;
+  color: var(--text-color-2);
+}
+
+.Footer .Subscribe .Email input {
+  background: var(--background-3);
+  color: var(--text-color-2);
+  border: none;
+}
+
+.Footer .Subscribe .Email input::placeholder {
+  color: var(--text-color-2);
+}
+
+.Footer .Subscribe .Email input:focus {
+  outline: none;
+}
+
+.Footer .Subscribe .Email button {
+  background: var(--text-color-2);
+  border: none;
+}
+
+.Footer .Copyright p{
+  color: var(--text-color-1);
 }

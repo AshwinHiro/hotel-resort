@@ -1,7 +1,19 @@
 import React, { useState } from "react";
+import Popup from "../Components/Popup/Popup";
 
 const Home = () => {
+    const InitialAddButtonConfig = {
+        ButtonStyle: "Fill", ButtonText: "", Color: "", ButtonSize: "Small", Icon: true, Delete: true
+    }
+    const InitalRoomConfig = {
+        SuiteName: "", Charges: "", DoubleBed: true, Bathtub: true, AirConditioner: true, FreeWifi: true,
+    }
+
   const [_hoverServiceCard, setHoverServiceCard] = useState("");
+  
+  const [_openButtonModal, setOpenButtonModal] = useState(false);
+  const [_StoreAddButtonConfig, setStoreAddButtonConfig] = useState(InitialAddButtonConfig);
+  const [_AddButtonConfig, setAddButtonConfig] = useState(InitialAddButtonConfig);
 
   const RoomCardData = [
     [
@@ -49,6 +61,11 @@ const Home = () => {
       },
     ],
   ];
+
+    const [_openRoomModal, setOpenRoomModal] = useState(false);
+    const [_StoreRoomConfig, setStoreRoomConfig] = useState(InitalRoomConfig);
+    const [_RoomConfig, setRoomConfig] = useState(RoomCardData);
+    const [_RoomIndex, setRoomIndex] = useState([]);
 
   const ServicesData = [
     [
@@ -120,6 +137,28 @@ const Home = () => {
     );
   };
 
+  const handleRoomModal = (toggle, Indexes) => {
+    if(toggle === "open") {
+        const RoomData = Object.assign({} , _RoomConfig[Indexes[0]][Indexes[1]]);
+        setRoomIndex(Indexes);
+        setStoreRoomConfig(RoomData);
+        setOpenRoomModal(true);
+    }
+    else {
+        setRoomIndex([]);
+        setStoreRoomConfig(InitalRoomConfig);
+        setOpenRoomModal(false);
+    }
+  }
+
+   const handleRoomSave = () => {
+    const UpdateRoomData = Object.assign([], RoomCardData);
+    UpdateRoomData[_RoomIndex[0]][_RoomIndex[1]] = _StoreRoomConfig;
+    setRoomConfig(UpdateRoomData);
+    setStoreRoomConfig(InitalRoomConfig);
+    setOpenRoomModal(false);
+  }
+
   const RoomCard = ({
     SuiteName,
     Charges,
@@ -127,6 +166,9 @@ const Home = () => {
     Bathtub,
     AirConditioner,
     FreeWifi,
+    RoomsIndex,
+    RoomIndex,
+    key
   }) => {
     return (
       <div className="RoomCardContainer col mx-4">
@@ -195,6 +237,10 @@ const Home = () => {
               )}
             </div>
           </div>
+        </div>
+
+        <div className="EditContainer px-2 py-2">
+            <img width={25} src="images/EditColor.png" alt="Edit" onClick={() => handleRoomModal("open", [RoomsIndex, RoomIndex])} />
         </div>
       </div>
     );
@@ -275,6 +321,17 @@ const Home = () => {
     )
   }
 
+  const handleSave = () => {
+    setAddButtonConfig({..._StoreAddButtonConfig, Delete: false});
+    setOpenButtonModal(false);
+  }
+
+  const handleDelete = () => {
+    setAddButtonConfig(InitialAddButtonConfig);
+    setStoreAddButtonConfig(InitialAddButtonConfig);
+    setOpenButtonModal(false);
+  }
+
   return (
     <div className="Home">
       {/* Banner */}
@@ -288,21 +345,37 @@ const Home = () => {
           <h1>A Luxurious Way To Enjoy Your Life</h1>
         </div>
 
-        <div className="my-4">
-          <button className="DiscoverButton px-4 py-2">
-            Discover Rooms{" "}
-            <img
-              className="mx-2"
-              width={5}
-              src="images/Right_Arrow_White.png"
-              alt="Right Arrow"
-            />
-          </button>
-        </div>
+        {
+            !_AddButtonConfig.Delete && (
+                <div className="my-4">
+                    <button className={`DiscoverButton px-4 py-2 ${_AddButtonConfig.ButtonStyle} ${_AddButtonConfig.ButtonSize}`} style={{backgroundColor: _AddButtonConfig.Color}}>
+                        {_AddButtonConfig.ButtonText}{" "}
+                        
+                        {
+                            _AddButtonConfig.Icon && (
+                                <img
+                                    className="mx-2"
+                                    width={5}
+                                    src="images/Right_Arrow_White.png"
+                                    alt="Right Arrow"
+                                />
+                            )
+                        }
+                        
+                        <img className="Edit" width={25} src="images/Edit.png" alt="Edit" onClick={() => setOpenButtonModal(true)} />
+                    </button>
+                </div>
+            )
+        }
 
-        <div>
-          <button className="AddButton py-2 px-3">+ Add Button</button>
-        </div>
+        {
+            _AddButtonConfig.Delete && (
+                <div>
+                    <button className="AddButton py-2 px-3" onClick={() => setOpenButtonModal(true)}>+ Add Button</button>
+                </div>
+            )
+        }
+
       </div>
 
       {/* Availability */}
@@ -343,10 +416,10 @@ const Home = () => {
         </div>
 
         <div>
-          {RoomCardData.map((Rooms, RoomsIndex) => (
+          {_RoomConfig.map((Rooms, RoomsIndex) => (
             <div key={RoomsIndex} className="row my-5">
               {Rooms.map((Room, RoomIndex) => (
-                <RoomCard key={RoomIndex} {...Room} />
+                <RoomCard key={RoomIndex} RoomsIndex={RoomsIndex} RoomIndex={RoomIndex} {...Room} />
               ))}
             </div>
           ))}
@@ -476,6 +549,294 @@ const Home = () => {
         </div>
 
       </div>
+
+
+
+
+
+      {/* Popups */}
+
+      {/* Add Button Popup */}
+
+      
+        {
+            _openButtonModal && 
+            (
+                <Popup>
+            
+                    <div className="AddButton">
+                        
+                        <div className="text-end my-3 Close">
+                            <img width={25} src="images/Cross.png" alt="Close" onClick={() => setOpenButtonModal(false)} />
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Button Style</h5>
+                                </div>
+
+                                <div>
+                                    <p>Filled with solid color or outlined</p>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <select className="px-3 py-1" value={_StoreAddButtonConfig.ButtonStyle} onChange={(e) => setStoreAddButtonConfig(prevdata => ({...prevdata, ButtonStyle: e.target.value}))} >
+                                    <option value="Fill">Fill</option>
+                                    <option value="Bordered">Bordered</option>
+                                </select>
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Button Text</h5>
+                                </div>
+
+                                <div>
+                                    <p>Add call to action of button ie. name</p>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input className="px-3 py-1" type="text" value={_StoreAddButtonConfig.ButtonText} onChange={(e) => setStoreAddButtonConfig(prevdata => ({...prevdata, ButtonText: e.target.value}))} placeholder="Button" />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Color</h5>
+                                </div>
+
+                                <div>
+                                    <p>Button color</p>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <div className="ColorPicker d-flex align-items-center">
+                                    <input className="px-3 py-1" type="color" value={_StoreAddButtonConfig.Color} onChange={(e) => setStoreAddButtonConfig(prevdata => ({...prevdata, Color: e.target.value}))} />
+                                    
+                                    <p>{_AddButtonConfig.Color}</p>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Button Size</h5>
+                                </div>
+
+                                <div>
+                                    <p>Size of button</p>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <select className="px-3 py-1" value={_StoreAddButtonConfig.ButtonSize} onChange={(e) => setStoreAddButtonConfig(prevdata => ({...prevdata, ButtonSize: e.target.value}))}>
+                                    <option value="Small">Small</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Large">Large</option>
+                                </select>
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Button Icon</h5>
+                                </div>
+
+                                <div>
+                                    <p>Toggle icon</p>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input type="checkbox" checked={_StoreAddButtonConfig.Icon} onChange={(e) => setStoreAddButtonConfig(prevdata => ({...prevdata, Icon: e.target.checked}))} />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="Buttons">
+
+                            <div className="Save my-2"><button className="w-100 py-2" onClick={() => handleSave()}>Save Button</button></div>
+
+                            <div className="Delete my-2"><button className="w-100" onClick={() => handleDelete()}>Delete</button></div>
+
+                        </div>
+
+                    </div>
+
+                </Popup>
+            )
+        }
+
+        {/* Room Popup */}
+
+        {
+            _openRoomModal && 
+            (
+                <Popup>
+            
+                    <div className="AddButton">
+                        
+                        <div className="text-end my-3 Close">
+                            <img width={25} src="images/Cross.png" alt="Close" onClick={() => setOpenRoomModal(false)} />
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Suite Type</h5>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input className="px-3 py-1" type="text" value={_StoreRoomConfig.SuiteName} onChange={(e) => setStoreRoomConfig(prevdata => ({...prevdata, SuiteName: e.target.value}))} placeholder="Suite" />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Suite Price</h5>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input className="px-3 py-1" type="text" value={_StoreRoomConfig.Charges} onChange={(e) => setStoreRoomConfig(prevdata => ({...prevdata, Charges: e.target.value}))} placeholder="$100/Night" />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Double Bedroom Icon</h5>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input type="checkbox" checked={_StoreRoomConfig.DoubleBed} onChange={(e) => setStoreRoomConfig(prevdata => ({...prevdata, DoubleBed: e.target.checked}))} />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Bathtub Icon</h5>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input type="checkbox" checked={_StoreRoomConfig.Bathtub} onChange={(e) => setStoreRoomConfig(prevdata => ({...prevdata, Bathtub: e.target.checked}))} />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>AirConditioner Icon</h5>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input type="checkbox" checked={_StoreRoomConfig.AirConditioner} onChange={(e) => setStoreRoomConfig(prevdata => ({...prevdata, AirConditioner: e.target.checked}))} />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-between my-3">
+
+                            <div>
+
+                                <div>
+                                    <h5>Free Wifi Icon</h5>
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <input type="checkbox" checked={_StoreRoomConfig.FreeWifi} onChange={(e) => setStoreRoomConfig(prevdata => ({...prevdata, FreeWifi: e.target.checked}))} />
+                                
+                            </div>
+
+                        </div>
+
+                        <div className="Buttons">
+
+                            <div className="Save my-2"><button className="w-100 py-2" onClick={() => handleRoomSave()}>Save Button</button></div>
+
+                        </div>
+
+                    </div>
+
+                </Popup>
+            )
+        }
     </div>
   );
 };
