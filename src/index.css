@@ -25,6 +25,7 @@ p {
   --background-1: #2D2C2C;
   --background-2: #D9D9D9;
   --background-3: #575656;
+  --background-4: #8F714D;
   --letter-spacing-text: 4px;
   --font-size-h1: 4rem;
 }
@@ -139,9 +140,42 @@ p {
   color: var(--text-color-3);
 }
 
+.Home .Availability {
+  position: relative;
+  top: -70px;
+}
+
 .Home .Availability .Box {
   width: 80%;
   background: var(--background-1);
+}
+
+.Home .Availability .Box h5 {
+  color: var(--text-color-1);
+  font-weight: normal;
+}
+
+.Home .Availability .Box select{
+  width: 100px;
+  background-color: var(--background-3);
+  border: none;
+  padding-top: 12.5px;
+  padding-bottom: 12.5px;
+  color: var(--text-color-2);
+}
+
+.Home .Availability .Box select:focus {
+  outline: none;
+}
+
+.Home .Availability .Box .SpanBox {
+  width: 20px;
+  height: 50px;
+  background-color: var(--background-3);
+}
+
+.Home .Availability .Box p {
+  color: var(--text-color-2);
 }
 
 .Home .RoomChoices .RoomTitle {
@@ -162,7 +196,9 @@ p {
   overflow: hidden;
 }
 
-.Home .RoomChoices .RoomCardContainer .EditContainer {
+.Home .RoomChoices .RoomCardContainer .EditContainer,
+.Home .Services .ServiceCardContainer .EditContainer,
+.Home .ExpertTeam .TeamCard .EditContainer {
   background: var(--text-color-1);
   width: fit-content;
   position: absolute;
@@ -173,7 +209,9 @@ p {
   cursor: pointer;
 }
 
-.Home .RoomChoices .RoomCardContainer:hover .EditContainer {
+.Home .RoomChoices .RoomCardContainer:hover .EditContainer,
+.Home .Services .ServiceCardContainer:hover .EditContainer,
+.Home .ExpertTeam .TeamCard:hover .EditContainer {
   visibility: visible;
 }
 
@@ -222,6 +260,7 @@ p {
 
 .Home .Services .ServiceCardContainer {
   background-color: var(--background-1);
+  position: relative;
 }
 
 .Home .Services .ServiceCardContainer.NoService {
@@ -295,6 +334,7 @@ p {
 .Home .ExpertTeam .TeamCard {
   width: 250px;
   overflow: hidden;
+  position: relative;
 }
 
 .Home .ExpertTeam .TeamCard .Cover {
@@ -327,24 +367,139 @@ p {
   color: var(--text-color-2);
 }
 
+/* Service */
+
+
+.ServicePage .Banner {
+  background: var(--background-banner);
+  height: 100vh;
+}
+
+.ServicePage .Banner p {
+  text-transform: uppercase;
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  font-size: 1.5rem;
+}
+
+.ServicePage .Banner h1 {
+  color: var(--text-color-1);
+  font-size: var(--font-size-h1);
+  font-weight: normal;
+}
+
+
+.ServicePage .Services .ServiceTextContainer .ServiceTitle {
+  color: var(--text-color-2);
+  letter-spacing: var(--letter-spacing-text);
+  text-transform: uppercase;
+}
+
+.ServicePage .Services .ServiceTextContainer .ServiceHeading h1 {
+  font-weight: normal;
+  font-size: var(--font-size-h1);
+}
+
+.ServicePage .Services .ServiceCardContainer {
+  background-color: var(--background-1);
+}
+
+.ServicePage .Services .ServiceCardContainer.NoService {
+  background-color: var(--background-2);
+}
+
+.ServicePage .Services .ServiceCardContainer h5,
+.ServicePage .Services .ServiceCardContainer p {
+  color: var(--text-color-1);
+}
+
+.ServicePage .Services .ServiceCardContainer .DiscoverButton:hover {
+  border-top: 1px solid var(--text-color-2);
+  border-bottom: 1px solid var(--text-color-2);
+  color: var(--text-color-2);
+}
+
+.ServicePage .Experience {
+  height: 60vh;
+}
+
+.ServicePage .Experience .Box{
+  position: relative;
+}
+
+.ServicePage .Experience .Background {
+  background: var(--background-banner);
+  height: 80%;
+}
+
+.ServicePage .Experience .Background .BackgroundHeading h1{
+  color: var(--text-color-1);
+  font-weight: normal;
+}
+
+.ServicePage .Experience .Availability {
+  position:absolute;
+  background: var(--text-color-2);
+  width: 30%;
+  top: 0;
+  right: 100px;
+  height: 100%;
+}
+
+.ServicePage .Experience .Availability .DateInputContainer .DateInput {
+  background: var(--background-4);
+  color: var(--text-color-1);
+  width: 290px;
+}
+
+.ServicePage .Experience .Availability .DateInputContainer .CalendarButton button {
+  background: var(--background-4);
+}
+
+.ServicePage .Experience .Availability select{
+  width: 100px;
+  background-color: var(--background-4);
+  border: none;
+  padding-top: 12.5px;
+  padding-bottom: 12.5px;
+  color: var(--text-color-1);
+}
+
+.ServicePage .Experience .Availability select:focus {
+  outline: none;
+}
+
+.ServicePage .Experience .Availability .SpanBox {
+  width: 20px;
+  height: 50px;
+  background-color: var(--background-4);
+}
+
+.ServicePage .Experience .Availability p {
+  color: var(--text-color-1);
+}
 
 /* DateInput */
 
 .DateInputContainer {
   position: relative;
   float: left;
+  background: var(--background-3);
 }
 
 .DateInputContainer .DateInput {
-  padding: 5px 10px;
+  /* padding: 5px 10px; */
   height: 30px;
-  width: 150px;
+  width: 200px;
+  background-color: var(--background-3);
+  color: var(--text-color-2);
+  border: none;
 }
 
 .DateInputContainer .CalendarButton {
   position: absolute;
-  top: 2px;
-  right: 11px;
+  top: 10px;
+  right: 8px;
   width: 25px;
   height: 25px;
   background: #fff;
@@ -353,7 +508,7 @@ p {
 
 .DateInputContainer .CalendarButton button {
   border: none;
-  background: transparent;
+  background-color: var(--background-3);
 }
 
 
@@ -413,6 +568,12 @@ p {
 .PopupContainer .Box .AddButton select:active,
 .PopupContainer .Box .AddButton select:focus-within {
   outline: none;
+}
+
+.PopupContainer .Box .AddButton textarea {
+  width: 100%;
+  resize: none;
+  min-height: 200px;
 }
 
 .PopupContainer .Box .AddButton .ColorPicker {
