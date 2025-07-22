@@ -812,7 +812,7 @@ const InitialTeamConfig = {
                     }
                   />
 
-                  <p>{_AddButtonConfig.Color}</p>
+                  <p>{_StoreAddButtonConfig.Color}</p>
                 </div>
               </div>
             </div>
