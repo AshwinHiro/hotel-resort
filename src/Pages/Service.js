@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import Popup from "../Components/Popup/Popup";
 
 const Service = () => {
+  const InitialServiceConfig = {
+    ServiceName: "",
+    ServiceDesc: "",
+    ImageSrc: "",
+  };
 
-      const InitialServiceConfig = {
-        ServiceName: "",
-        ServiceDesc: "",
-        ImageSrc: "",
-    };
+  const [_hoverServiceCard, setHoverServiceCard] = useState("");
 
-      const [_hoverServiceCard, setHoverServiceCard] = useState("");
-    
   const ServicesData = [
     [
       {
@@ -53,16 +52,18 @@ const Service = () => {
     ],
   ];
 
-  
   const [_openServiceModal, setOpenServiceModal] = useState(false);
-  const [_StoreServiceConfig, setStoreServiceConfig] = useState(InitialServiceConfig);
+  const [_StoreServiceConfig, setStoreServiceConfig] =
+    useState(InitialServiceConfig);
   const [_ServiceConfig, setServiceConfig] = useState(ServicesData);
   const [_ServiceIndex, setServiceIndex] = useState([]);
 
-    
   const handleServiceModal = (toggle, Indexes) => {
     if (toggle === "open") {
-      const ServiceData = Object.assign({}, _ServiceConfig[Indexes[0]][Indexes[1]]);
+      const ServiceData = Object.assign(
+        {},
+        _ServiceConfig[Indexes[0]][Indexes[1]]
+      );
       setServiceIndex(Indexes);
       setStoreServiceConfig(ServiceData);
       setOpenServiceModal(true);
@@ -73,15 +74,50 @@ const Service = () => {
     }
   };
 
-  const handleServiceSave = () => {
+  const handleServiceSave = async () => {
     const UpdateServiceData = Object.assign([], _ServiceConfig);
     UpdateServiceData[_ServiceIndex[0]][_ServiceIndex[1]] = _StoreServiceConfig;
     setServiceConfig(UpdateServiceData);
+
+    await callAPIAfterEdit("Team", _StoreServiceConfig);
+
     setStoreServiceConfig(InitialServiceConfig);
     setOpenServiceModal(false);
   };
 
-  const ServiceCard = ({ ServiceName, ServiceDesc, ImageSrc, ServicesIndex, ServiceIndex}) => {
+  const callAPIAfterEdit = async (ComponentName, Value) => {
+    try {
+      const response = await fetch("http://localhost:5000/update-section", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          component: ComponentName,
+          field: "All Fields",
+          value: JSON.stringify(Value),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.message);
+      } else {
+        console.error("Server error:", data.error);
+      }
+    } catch (error) {
+      console.error("Request failed:", error);
+    }
+  };
+
+  const ServiceCard = ({
+    ServiceName,
+    ServiceDesc,
+    ImageSrc,
+    ServicesIndex,
+    ServiceIndex,
+  }) => {
     return (
       <div
         className={`ServiceCardContainer ${
@@ -124,7 +160,14 @@ const Service = () => {
               </div>
             </div>
             <div className="EditContainer px-2 py-2">
-              <img width={25} src="images/EditColor.png" alt="Edit" onClick={() => handleServiceModal("open", [ServicesIndex,ServiceIndex])} />
+              <img
+                width={25}
+                src="images/EditColor.png"
+                alt="Edit"
+                onClick={() =>
+                  handleServiceModal("open", [ServicesIndex, ServiceIndex])
+                }
+              />
             </div>
           </>
         ) : (
@@ -193,7 +236,12 @@ const Service = () => {
           {_ServiceConfig.map((Services, ServicesIndex) => (
             <div key={ServicesIndex} className="row">
               {Services.map((Service, ServiceIndex) => (
-                <ServiceCard key={ServiceIndex} ServicesIndex={ServicesIndex} ServiceIndex={ServiceIndex} {...Service} />
+                <ServiceCard
+                  key={ServiceIndex}
+                  ServicesIndex={ServicesIndex}
+                  ServiceIndex={ServiceIndex}
+                  {...Service}
+                />
               ))}
             </div>
           ))}
@@ -278,7 +326,6 @@ const Service = () => {
       <br />
       <br />
 
-
       {/* Service Popup */}
 
       {_openServiceModal && (
@@ -341,7 +388,10 @@ const Service = () => {
 
             <div className="Buttons">
               <div className="Save my-2">
-                <button className="w-100 py-2" onClick={() => handleServiceSave()}>
+                <button
+                  className="w-100 py-2"
+                  onClick={() => handleServiceSave()}
+                >
                   Save Button
                 </button>
               </div>
@@ -349,8 +399,6 @@ const Service = () => {
           </div>
         </Popup>
       )}
-      
-
     </div>
   );
 };

@@ -189,10 +189,13 @@ const InitialTeamConfig = {
     }
   };
 
-  const handleRoomSave = () => {
+  const handleRoomSave = async () => {
     const UpdateRoomData = Object.assign([], _RoomConfig);
     UpdateRoomData[_RoomIndex[0]][_RoomIndex[1]] = _StoreRoomConfig;
     setRoomConfig(UpdateRoomData);
+
+    await callAPIAfterEdit("Team", _StoreRoomConfig);
+
     setStoreRoomConfig(InitalRoomConfig);
     setOpenRoomModal(false);
   };
@@ -302,10 +305,13 @@ const InitialTeamConfig = {
     }
   };
 
-  const handleServiceSave = () => {
+  const handleServiceSave = async () => {
     const UpdateServiceData = Object.assign([], _ServiceConfig);
     UpdateServiceData[_ServiceIndex[0]][_ServiceIndex[1]] = _StoreServiceConfig;
     setServiceConfig(UpdateServiceData);
+
+    await callAPIAfterEdit("Team", _StoreServiceConfig);
+
     setStoreServiceConfig(InitialServiceConfig);
     setOpenServiceModal(false);
   };
@@ -376,10 +382,13 @@ const InitialTeamConfig = {
     }
   };
 
-  const handleTeamSave = () => {
+  const handleTeamSave = async() => {
     const UpdateTeamData = Object.assign([], _TeamConfig);
     UpdateTeamData[_TeamIndex] = _StoreTeamConfig;
     setTeamConfig(UpdateTeamData);
+
+    await callAPIAfterEdit("Team", _StoreTeamConfig);
+
     setStoreTeamConfig(InitialTeamConfig);
     setOpenTeamModal(false);
   };
@@ -418,8 +427,9 @@ const InitialTeamConfig = {
     );
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setAddButtonConfig({ ..._StoreAddButtonConfig, Delete: false });
+    await callAPIAfterEdit("Add Button", { ..._StoreAddButtonConfig, Delete: false });
     setOpenButtonModal(false);
   };
 
@@ -428,6 +438,32 @@ const InitialTeamConfig = {
     setStoreAddButtonConfig(InitialAddButtonConfig);
     setOpenButtonModal(false);
   };
+
+  const callAPIAfterEdit = async (ComponentName, Value) => {
+    try {
+        const response = await fetch('http://localhost:5000/update-section', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            component: ComponentName,
+            field: 'All Fields',
+            value: JSON.stringify(Value),
+        }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log(data.message);
+        } else {
+            console.error('Server error:', data.error);
+        }
+    } catch (error) {
+        console.error('Request failed:', error);
+    }
+  }
 
   return (
     <div className="Home">
