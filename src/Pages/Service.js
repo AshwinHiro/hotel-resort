@@ -87,7 +87,7 @@ const Service = () => {
 
   const callAPIAfterEdit = async (ComponentName, Value) => {
     try {
-      const response = await fetch("http://localhost:5000/update-section", {
+      const response = await fetch("https://hotel-resort-steel.vercel.app/update-section", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
