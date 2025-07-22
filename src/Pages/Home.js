@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Popup from "../Components/Popup/Popup";
 
 const Home = () => {
+
+  const URL = "https://hotel-resort-ash-backend.vercel.app/";
+
   const InitialAddButtonConfig = {
     ButtonStyle: "Fill",
     ButtonText: "",
@@ -441,7 +444,7 @@ const InitialTeamConfig = {
 
   const callAPIAfterEdit = async (ComponentName, Value) => {
     try {
-        const response = await fetch('http://localhost:5000/update-section', {
+        const response = await fetch(`${URL}update-section`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Popup from "../Components/Popup/Popup";
 
 const Service = () => {
+
+  const URL = "https://hotel-resort-ash-backend.vercel.app/";
+
   const InitialServiceConfig = {
     ServiceName: "",
     ServiceDesc: "",
@@ -87,7 +90,7 @@ const Service = () => {
 
   const callAPIAfterEdit = async (ComponentName, Value) => {
     try {
-      const response = await fetch("https://hotel-resort-steel.vercel.app/update-section", {
+      const response = await fetch(`${URL}update-section`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
